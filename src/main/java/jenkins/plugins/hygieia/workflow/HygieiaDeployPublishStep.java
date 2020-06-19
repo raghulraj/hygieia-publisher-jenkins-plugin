@@ -220,7 +220,7 @@ public class HygieiaDeployPublishStep extends AbstractStepImpl {
 
 				Set<DeployDataCreateRequest> requests = deployBuilder.getDeploys();
 				for (DeployDataCreateRequest bac : requests) {
-					listener.getLogger().println("Hygieia: Published Deploy Data Request: " + bac);
+					listener.getLogger().println("Hygieia: Published Deploy Data Request: " + bac.toString());
 					HygieiaResponse deployResponse = hygieiaService.publishDeployData(bac);
 					if (deployResponse.getResponseCode() == HttpStatus.SC_CREATED) {
 						listener.getLogger().println("Hygieia: Published Deploy Data: " + deployResponse.toString());
