@@ -196,6 +196,10 @@ public class HygieiaDeployPublishStep extends AbstractStepImpl {
 			String[] hygieiaAPIUrls = hygieiaDesc.getHygieiaAPIUrl().split(";");
 			for (String hygieiaAPIUrl : hygieiaAPIUrls) {
 				this.listener.getLogger().println("Publishing data for API " + hygieiaAPIUrl);
+				
+				listener.getLogger().println("Hygieia Service " + hygieiaDesc.getHygieiaAPIUrl() +":"+hygieiaDesc.getHygieiaToken()+
+						":"+hygieiaDesc.getHygieiaJenkinsName()+":"+hygieiaDesc.isUseProxy());
+				
 				HygieiaService hygieiaService = getHygieiaService(hygieiaDesc.getHygieiaAPIUrl(),
 						hygieiaDesc.getHygieiaToken(), hygieiaDesc.getHygieiaJenkinsName(), hygieiaDesc.isUseProxy());
 
@@ -216,6 +220,7 @@ public class HygieiaDeployPublishStep extends AbstractStepImpl {
 
 				Set<DeployDataCreateRequest> requests = deployBuilder.getDeploys();
 				for (DeployDataCreateRequest bac : requests) {
+					listener.getLogger().println("Hygieia: Published Deploy Data Request: " + bac);
 					HygieiaResponse deployResponse = hygieiaService.publishDeployData(bac);
 					if (deployResponse.getResponseCode() == HttpStatus.SC_CREATED) {
 						listener.getLogger().println("Hygieia: Published Deploy Data: " + deployResponse.toString());
